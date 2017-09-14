@@ -1,0 +1,201 @@
+---
+title: "Warm-Up 02 - Stat 133, Fall 2017"
+author: "Vitali Shypko"
+date: "9/11/2017"
+output: github_document
+---
+
+**Loading resources**:
+```{r}
+# load the objects
+load('nba2017-salary-points.RData')
+```
+
+```{r}
+# list the available objects
+ls()
+```
+
+All the objects described in the data directory are present (_"experience"_, _"player"_, _"points"_, _"points1"_, _"points2"_, _"points3"_, _"position"_, _"salary"_, _"team"_)
+
+---
+
+**Classes of objects in the file**:
+```{r}
+class(experience)
+class(player)
+class(points)
+class(points1)
+class(points2)
+class(points3)
+class(position)
+class(salary)
+class(team)
+```
+
+**There are no lists, but there are vectors and a factor**.
+
+---
+
+**Object modes**:
+```{r}
+mode(experience)
+mode(player)
+mode(points)
+mode(points1)
+mode(points2)
+mode(points3)
+mode(position)
+mode(salary)
+mode(team)
+```
+
+---
+
+**Length of all the objects**:
+```{r}
+length(experience)
+length(player)
+length(points)
+length(points1)
+length(points2)
+length(points3)
+length(position)
+length(salary)
+length(team)
+```
+
+---
+
+## Exploratory Data Analysis
+
+---
+
+### Quantitative Variable
+
+---
+
+**Summary**:
+```{r}
+summary(points3)
+```
+
+---
+
+**Statistics**:
+
+* _Mean (i.e. average)_:
+```{r}
+mean(points3)
+```
+
+* _Standard deviation_:
+```{r}
+sd(points3)
+```
+
+* _Minimum value_:
+```{r}
+min(points3)
+```
+
+* _Maximum value_:
+```{r}
+max(points3)
+```
+
+* _Median_:
+```{r}
+median(points3)
+```
+
+* _Quartiles_:
+```{r}
+quantile(points3)
+```
+
+**The typical values are ~50**.
+
+---
+
+**The spread in each vector**:
+```{r}
+range(points3)
+```
+
+---
+
+**Distribution**:
+```{r}
+hist(points3)
+```
+
+```{r}
+boxplot(points3)
+```
+
+---
+
+### Qualitative Variable (_team_)
+
+---
+
+**Is the variable factor**?
+```{r}
+is.factor(team)
+```
+
+---
+
+**Frequency table (counts of each category)**:
+```{r}
+table(team)
+```
+
+---
+
+**Relative frequencies (proportions)**:
+```{r}
+prop.table(table(team))
+```
+
+**Looking at the frequencies and relative frequencies, it looks like the distribution is almost even**.
+
+---
+
+**Frequencies with a barchart**:
+```{r}
+barplot(table(team))
+```
+
+---
+
+### Process report
+
+- What things were hard, even though you saw them in class?
+
+> Describing data and graphs is pretty hard for me as a non-stats major.
+
+- What was easy(-ish) even though we haven't done it in class?
+
+> Markdown syntax and features (getting used to it). Also, using new libraries and functions is pretty straightworward in most cases.
+
+- What type of "errors" you struggled with (if any)?
+
+> "Error: attempt to use zero-length variable name". But it seems to knit regardless of it.
+
+- What are the parts you are not fully understanding?
+
+> I am not fully understanding how exactly we need to describe graphs and our findings.
+
+- What was the most time consuming part?
+
+> The most time consuming part was using R functions that I haven't encountered before (such as density curve).
+
+- Did you collaborate with other students? If so, with who? In what manner?
+
+> I didn't collaborate with other students.
+
+- Was there any frustrating issue? (e.g. RStudio cryptic error, one or more package not playing nice)
+
+> In the very beginning, RStudio couldn't locate the data file. After I restarted it, the error was gone.
