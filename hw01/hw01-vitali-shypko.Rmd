@@ -1,13 +1,15 @@
 ---
 title: "HW1"
 author: "Vitali Shypko"
-date: "9/19/2017"
+date: "9/20/2017"
 output: github_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+#### Importing the data
 
 ```{r}
 # load data file
@@ -19,188 +21,283 @@ load("data/nba2017-salary-points.RData")
 ls()
 ```
 
-## 1) A bit of data preprocessing
+***
+
+### 1) A bit of data preprocessing
 
 ```{r}
-salary_millions <- formatC((salary / 1000000), digits = 2, format = "f")
+# salary in millions
+salary_millions <- as.numeric(formatC((salary / 1000000), digits = 2, format = "f"))
 ```
 
 ```{r}
+# experience as integer vector (replacing "R" with 0)
 experience <- as.integer(replace(experience, experience=="R", 0))
 ```
 
 ```{r}
+# more desctiptive names for positions in new position factor
 position = factor(position, labels=c("center","power_fwd","point_guard", "small_fwd", "shoot_guard"))
+```
+
+The frequencies with the function table():
+```{r}
 table(position)
 ```
-## 2) Scatterplot of Points and Salary
+
+***
+
+### 2) Scatterplot of Points and Salary
 
 ```{r}
-plot(points, salary_millions, pch=16, col = "darksalmon", cex = 0.95, cex.lab = 1.1, cex.main = 1.5, xlab = "Points", ylab = "Salary (in millions)", main = "Scatterplot of Points and Salary")
+plot(points, salary_millions, pch=16, col = "darksalmon", cex = 0.95, cex.lab = 1.1, cex.main = 1.5, 
+     xlab = "Points", ylab = "Salary (in millions)", main = "Scatterplot of Points and Salary")
 ```
 
-## 3) Correlation between Points and Salary
+From the scatterplot it is evident that the vast majority of players earn less than 5 million dollars a year. Some of those players score more than players who earn 20+ millions, so it is safe to say that there is not direct correlation between points scored and salary. It means that there are other factors that play a major role in how much a player earns besides points scored.
+
+***
+
+### 3) Correlation between Points and Salary
 
 ```{r}
 X = points
-Y = salary
-
-n = length(player)
-cat("Number of individuals:", n)
-
-x = 1 / n * sum(X)
-cat("Mean of variable X (points):", x)
-
-y = 1 / n * sum(Y)
-cat("Mean of variable Y (salary):", y)
-
-varX = 1 / (n - 1) * sum((X - x)^2)
-cat("Variance of X:", varX)
-
-varY = 1 / (n - 1) * sum((Y - y)^2)
-cat("Variance of Y:", varY)
-
-sdX = sqrt(varX)
-cat("Standard deviation of X:", sdX)
-
-sdY = sqrt(varY)
-cat("Standard deviation of Y:", sdY)
-
-covXY = 1 / (n - 1) * sum((X - x) * (Y - y))
-cat("Covariance between X and Y:", covXY)
-
-corXY = covXY / (sdX * sdY)
-cat("Correlation between X and Y:", corXY)
+Y = salary_millions
 ```
 
-## 4) Simple Linear Regression
+```{r}
+n = length(player)
+```
+Number of individuals: `r n`
+
+```{r}
+x = 1 / n * sum(X)
+```
+
+Mean of variable X (points): `r x`
+
+```{r}
+y = 1 / n * sum(Y)
+```
+
+Mean of variable Y (salary in millions) `r y`
+
+```{r}
+varX = 1 / (n - 1) * sum((X - x)^2)
+```
+
+Variance of X: `r varX`
+
+```{r}
+varY = 1 / (n - 1) * sum((Y - y)^2)
+```
+
+Variance of Y: `r varY`
+
+```{r}
+sdX = sqrt(varX)
+```
+
+Standard deviation of X: `r sdX`
+
+```{r}
+sdY = sqrt(varY)
+```
+
+Standard deviation of Y: `r sdY`
+
+```{r}
+covXY = 1 / (n - 1) * sum((X - x) * (Y - y))
+```
+
+Covariance between X and Y: `r covXY`
+
+```{r}
+corXY = covXY / (sdX * sdY)
+```
+
+Correlation between X and Y: `r corXY`
+
+***
+
+### 4) Simple Linear Regression
 
 ```{r}
 b1 = corXY * (sdY / sdX)
-b0 = y - b1 * x
-Yhat = b0 + b1 * X
+```
 
+Estimated slope of the regression line: `r b1`
+
+```{r}
+b0 = y - b1 * x
+```
+
+Estimated intercept of the regression line: `r b0`
+
+```{r}
+Yhat = b0 + b1 * X
+```
+
+Summary statistics:
+
+```{r}
 summary(Yhat)
 ```
 
-The regression equation is $ŷ = b_0 + b_1X$.
+The regression equation is $Y = {b_0}+{b_1}{X}$.
 
-The slope coefficient $b_1$ is the rate of change of Y as X changes.
+The slope coefficient $b_1$ is the rate of change in Y as X changes (steepness of a line).
 
-The intercept term $b_0$ is the expected mean value of Y when all X = 0.
+The intercept term $b_0$ is the expected mean value of Y when all X = 0 (indicates the location where the line intersects an axis).
 
 ```{r}
 Yhat = b0 + b1 * 0
-cat("Predicted salary for a player who scores 0 points:", Yhat)
 ```
+
+Predicted salary (in millions) for a player who scores 0 points: `r Yhat`
 
 
 ```{r}
 Yhat = b0 + b1 * 100
-cat("Predicted salary for a player who scores 100 points:", Yhat)
 ```
 
+Predicted salary (in millions) for a player who scores 100 points: `r Yhat`
 
 ```{r}
 Yhat = b0 + b1 * 500
-cat("Predicted salary for a player who scores 500 points:", Yhat)
 ```
 
+Predicted salary (in millions) for a player who scores 500 points: `r Yhat`
 
 ```{r}
 Yhat = b0 + b1 * 1000
-cat("Predicted salary for a player who scores 1000 points:", Yhat)
 ```
 
+Predicted salary (in millions) for a player who scores 1000 points: `r Yhat`
 
 ```{r}
 Yhat = b0 + b1 * 2000
-cat("Predicted salary for a player who scores 2000 points:", Yhat)
 ```
 
-## 5) Plotting the regression line
+Predicted salary (in millions) for a player who scores 2000 points: `r Yhat`
+
+***
+
+### 5) Plotting the regression line
 
 ```{r}
-plot(points, salary_millions, pch=16, col = "darksalmon", cex = 0.95, cex.lab = 1.1, cex.main = 1.5, xlab = "Points", ylab = "Salary (in millions)", main = "Scatterplot of Points and Salary")
+plot(points, salary_millions, pch=16, col = "darkgray", cex = 0.95, cex.lab = 1.1, cex.main = 1.5,
+     xlab = "Points", ylab = "Salary (in millions)", main = "Regression and Lowess lines")
 
-abline(b0, b1, lwd = "4", col = "blue")
+abline(reg = lm(salary_millions ~ points), lwd = "4", col = "blue")
+lines(lowess(points, salary_millions), lwd = "4", col = "red")
 
-lines(lowess(points), lwd = "4", col = "purple")
-lines(lowess(salary_millions), lwd = "4", col = "red")
+text(2450, 20, "regression", col = "blue", cex = 0.9)
+text(2450, 30, "lowess", col = "red", cex = 0.9)
 ```
 
-## 6) Regression residuals and Coefficient of Determination $R^2$
+***
+
+### 6) Regression residuals and Coefficient of Determination $R^2$
 
 ```{r}
+# vector of residuals
 e = Y - Yhat
+```
+
+The vector of residuals summary:
+
+```{r}
 summary(e)
+```
+
+```{r}
 RSS = sum((e)^2)
+```
+
+The Residual Sum of Squares: `r RSS`
+
+```{r}
 TSS = sum((Y - y)^2)
+```
+
+The Total Sum of Squares: `r TSS`
+
+```{r}
 Rsquared = 1 - (RSS / TSS)
 ```
 
-## 7) Exploring Position and Experience
+The coefficient of determination $R^2$: `r Rsquared`
+
+***
+
+### 7) Exploring Position and Experience
 
 ```{r}
-plot(experience, salary_millions, xlab = "Years of Experience", ylab = "Salary (in millions)")
-lines(lowess(experience), lwd = "4", col = "purple")
-lines(lowess(salary_millions), lwd = "4", col = "red")
+plot(experience, salary_millions, pch=16, col = "darkgray", xlab = "Years of Experience",
+     ylab = "Salary (in millions)", main = "Scatterplot with lowess smooth")
+lines(lowess(experience, salary_millions), lwd = "4", col = "red")
 ```
 
+From this scatterplot with lowess smooth, we see that Experience seems to be related with Salary. There is an obvious up trend from 0 to 5-6 years of experience that slows down gradually after that and eventually declines slowly. This makes sense because rookies are very young and new, they have a lot to learn and need more practice before they can become stronger players. As they gradually become better, their salary goes up until they hit their peak form. After that, they start to become older and eventually cannot handle physical exercise as well as they used to. Therefore, they get paid less.
+
 ```{r}
-#install.packages("scatterplot3d")
+# install.packages("scatterplot3d") (used for one-time installation of the package)
 library("scatterplot3d")
-scatterplot3d(points, experience, salary_millions, xlab = "Points", ylab = "Salary (in millions)", zlab = "Experience")
+scatterplot3d(points, experience, salary_millions, pch = 16, color = "darksalmon", xlab = "Points",
+              ylab = "Experience", zlab = "Salary (in millions)", main = "3D Scatterplot")
 ```
+
+From this 3D scatterplot it is rather challenging to say for sure if there is correlation between Experience and Salary. It would be more evident if we could turn the scatterplot however we like.
 
 ```{r}
-#???boxplot(position)
+boxplot(salary_millions ~ position,  xlab = "Position", ylab = "Salary (in millions)")
 ```
 
-- Provide concise descriptions for the plots of this section.
-- From the scatterplots, does Experience seem to be related with Salary?
-- From the boxplot, does Position seem to be related with Salary?
+From this scatterplot 
 
-## 8) Comments and Reflections
+***
+
+### 8) Comments and Reflections
 
 - What things were hard, even though you saw them in class?
 
->Answer
+>I already saw boxplot in the class, but it was hard to interpret it with given data. I was not sure if the bars represent average values and what exactly is the meaning of things displayed above the bars.
 
 - What was easy(-ish) even though we haven’t done it in class?
 
->Answer
+>Installing and using scatterplot3d package was rather easy even though it was the first time I have interacted with it.
 
 - If this was the first time you were using git, how do you feel about it?
 
->This is not the first time I'm using git, so I feel pretty good about git in general. It's a great tool.
+>This is not the first time I'm using git, so I feel pretty good about git in general. It's a very useful tool.
 
 - If this was the first time using GitHub, how do you feel about it?
 
->This is not the first time I'm using GitHub.
+>This is not the first time I was using GitHub and I feel good about using it in this class.
 
 - Did you need help to complete the assignment? If so, what kind of help? Who helped
 you?
 
->I had to look for some functions and their usage online. Also, I had to download and install a separate library for scatterplot3d.
+>I had to look for some functions and their usage online. Also, I had to download and install a separate library for scatterplot3d. Moreover, I attended office hours because I had questions about overall composition of the homework and my abline function did not quite work. Turns out, that was because I passed salary instead of salary_millions there.
 
 - How much time did it take to complete this HW?
 
->About 6-7 hours
+>It took me about 6-8 hours to complete this homework.
 
 - What was the most time consuming part?
 
->Answer
+>Figuring out how to build plots and interpret them took a lot of time. Also, there were some concepts and formulas that were new to me since I am not a Statistics major.
 
 - Was there anything that you did not understand? or fully grasped?
 
->Answer
+>I did not fully get the meaning behind Regression residuals and sums of squares.
 
 - Was there anything frustrating in particular?
 
->Answer
+>Finding an uppercase Y-hat symbol for the inline formula was particularly frustrating.
 
 - Was there anything exciting? Something that you feel proud of? (Don’t be shy, we
 won’t tell anyone).
 
->The most exciting part for me was building a 3d graph. It seems like a very great way to visualize information.
+>The most exciting part for me was building a 3d graph. It seems like a great way to visualize data.
