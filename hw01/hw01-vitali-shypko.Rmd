@@ -1,7 +1,7 @@
 ---
-title: "HW1"
+title: "HW 01 - More Vectors"
 author: "Vitali Shypko"
-date: "9/20/2017"
+date: "9/22/2017"
 output: github_document
 ---
 
@@ -37,7 +37,7 @@ experience <- as.integer(replace(experience, experience=="R", 0))
 
 ```{r}
 # more desctiptive names for positions in new position factor
-position = factor(position, labels=c("center","power_fwd","point_guard", "small_fwd", "shoot_guard"))
+position = factor(position, labels=c("center", "power_fwd", "point_guard", "small_fwd", "shoot_guard"))
 ```
 
 The frequencies with the function table():
@@ -68,55 +68,55 @@ Y = salary_millions
 ```{r}
 n = length(player)
 ```
-Number of individuals: `r n`
+Number of individuals: _`r n`_
 
 ```{r}
 x = 1 / n * sum(X)
 ```
 
-Mean of variable X (points): `r x`
+Mean of variable X (points): _`r sprintf("%.2f", x)`_
 
 ```{r}
 y = 1 / n * sum(Y)
 ```
 
-Mean of variable Y (salary in millions) `r y`
+Mean of variable Y (salary in millions): _`r sprintf("%.2f", y)`_
 
 ```{r}
 varX = 1 / (n - 1) * sum((X - x)^2)
 ```
 
-Variance of X: `r varX`
+Variance of X: _`r sprintf("%.2f", varX)`_
 
 ```{r}
 varY = 1 / (n - 1) * sum((Y - y)^2)
 ```
 
-Variance of Y: `r varY`
+Variance of Y: _`r sprintf("%.2f", varY)`_
 
 ```{r}
 sdX = sqrt(varX)
 ```
 
-Standard deviation of X: `r sdX`
+Standard deviation of X: _`r sprintf("%.2f", sdX)`_
 
 ```{r}
 sdY = sqrt(varY)
 ```
 
-Standard deviation of Y: `r sdY`
+Standard deviation of Y: _`r sprintf("%.2f", sdY)`_
 
 ```{r}
 covXY = 1 / (n - 1) * sum((X - x) * (Y - y))
 ```
 
-Covariance between X and Y: `r covXY`
+Covariance between X and Y: _`r sprintf("%.2f", covXY)`_
 
 ```{r}
 corXY = covXY / (sdX * sdY)
 ```
 
-Correlation between X and Y: `r corXY`
+Correlation between X and Y: _`r sprintf("%.2f", corXY)`_
 
 ***
 
@@ -126,13 +126,13 @@ Correlation between X and Y: `r corXY`
 b1 = corXY * (sdY / sdX)
 ```
 
-Estimated slope of the regression line: `r b1`
+Estimated slope of the regression line: _`r sprintf("%.4f", b1)`_
 
 ```{r}
 b0 = y - b1 * x
 ```
 
-Estimated intercept of the regression line: `r b0`
+Estimated intercept of the regression line: _`r sprintf("%.4f", b0)`_
 
 ```{r}
 Yhat = b0 + b1 * X
@@ -144,7 +144,7 @@ Summary statistics:
 summary(Yhat)
 ```
 
-The regression equation is $Y = {b_0}+{b_1}{X}$.
+The regression equation $Y\^ = {b_0}+{b_1}{X}$ is a statistical technique used to explain or predict the behavior of a dependent variable.
 
 The slope coefficient $b_1$ is the rate of change in Y as X changes (steepness of a line).
 
@@ -154,32 +154,32 @@ The intercept term $b_0$ is the expected mean value of Y when all X = 0 (indicat
 Yhat = b0 + b1 * 0
 ```
 
-Predicted salary (in millions) for a player who scores 0 points: `r Yhat`
+Predicted salary (in millions) for a player who scores 0 points: _`r sprintf("%.2f", Yhat)`_
 
 
 ```{r}
 Yhat = b0 + b1 * 100
 ```
 
-Predicted salary (in millions) for a player who scores 100 points: `r Yhat`
+Predicted salary (in millions) for a player who scores 100 points: _`r sprintf("%.2f", Yhat)`_
 
 ```{r}
 Yhat = b0 + b1 * 500
 ```
 
-Predicted salary (in millions) for a player who scores 500 points: `r Yhat`
+Predicted salary (in millions) for a player who scores 500 points: _`r sprintf("%.2f", Yhat)`_
 
 ```{r}
 Yhat = b0 + b1 * 1000
 ```
 
-Predicted salary (in millions) for a player who scores 1000 points: `r Yhat`
+Predicted salary (in millions) for a player who scores 1000 points: _`r sprintf("%.2f", Yhat)`_
 
 ```{r}
 Yhat = b0 + b1 * 2000
 ```
 
-Predicted salary (in millions) for a player who scores 2000 points: `r Yhat`
+Predicted salary (in millions) for a player who scores 2000 points: _`r sprintf("%.2f", Yhat)`_
 
 ***
 
@@ -215,19 +215,19 @@ summary(e)
 RSS = sum((e)^2)
 ```
 
-The Residual Sum of Squares: `r RSS`
+The Residual Sum of Squares: _`r sprintf("%.2f", RSS)`_
 
 ```{r}
 TSS = sum((Y - y)^2)
 ```
 
-The Total Sum of Squares: `r TSS`
+The Total Sum of Squares: _`r sprintf("%.2f", TSS)`_
 
 ```{r}
 Rsquared = 1 - (RSS / TSS)
 ```
 
-The coefficient of determination $R^2$: `r Rsquared`
+The coefficient of determination $R^2$: _`r sprintf("%.2f", Rsquared)`_
 
 ***
 
@@ -254,7 +254,7 @@ From this 3D scatterplot it is rather challenging to say for sure if there is co
 boxplot(salary_millions ~ position,  xlab = "Position", ylab = "Salary (in millions)")
 ```
 
-From this scatterplot 
+From this scatterplot there is no real dependence between positions and salaries. Center players tend to make a bit more money on average and their salaries are the most spread out.
 
 ***
 

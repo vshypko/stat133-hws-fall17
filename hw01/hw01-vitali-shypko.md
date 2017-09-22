@@ -1,7 +1,7 @@
-HW1
+HW 01 - More Vectors
 ================
 Vitali Shypko
-9/20/2017
+9/22/2017
 
 #### Importing the data
 
@@ -34,7 +34,7 @@ experience <- as.integer(replace(experience, experience=="R", 0))
 
 ``` r
 # more desctiptive names for positions in new position factor
-position = factor(position, labels=c("center","power_fwd","point_guard", "small_fwd", "shoot_guard"))
+position = factor(position, labels=c("center", "power_fwd", "point_guard", "small_fwd", "shoot_guard"))
 ```
 
 The frequencies with the function table():
@@ -73,55 +73,55 @@ Y = salary_millions
 n = length(player)
 ```
 
-Number of individuals: 441
+Number of individuals: *441*
 
 ``` r
 x = 1 / n * sum(X)
 ```
 
-Mean of variable X (points): 546.6054422
+Mean of variable X (points): *546.61*
 
 ``` r
 y = 1 / n * sum(Y)
 ```
 
-Mean of variable Y (salary in millions) 6.186712
+Mean of variable Y (salary in millions): *6.19*
 
 ``` r
 varX = 1 / (n - 1) * sum((X - x)^2)
 ```
 
-Variance of X: 2.391362410^{5}
+Variance of X: *239136.24*
 
 ``` r
 varY = 1 / (n - 1) * sum((Y - y)^2)
 ```
 
-Variance of Y: 43.1950048
+Variance of Y: *43.20*
 
 ``` r
 sdX = sqrt(varX)
 ```
 
-Standard deviation of X: 489.0155866
+Standard deviation of X: *489.02*
 
 ``` r
 sdY = sqrt(varY)
 ```
 
-Standard deviation of Y: 6.5722907
+Standard deviation of Y: *6.57*
 
 ``` r
 covXY = 1 / (n - 1) * sum((X - x) * (Y - y))
 ```
 
-Covariance between X and Y: 2046.4294498
+Covariance between X and Y: *2046.43*
 
 ``` r
 corXY = covXY / (sdX * sdY)
 ```
 
-Correlation between X and Y: 0.6367329
+Correlation between X and Y: *0.64*
 
 ------------------------------------------------------------------------
 
@@ -131,13 +131,13 @@ Correlation between X and Y: 0.6367329
 b1 = corXY * (sdY / sdX)
 ```
 
-Estimated slope of the regression line: 0.0085576
+Estimated slope of the regression line: *0.0086*
 
 ``` r
 b0 = y - b1 * x
 ```
 
-Estimated intercept of the regression line: 1.5090879
+Estimated intercept of the regression line: *1.5091*
 
 ``` r
 Yhat = b0 + b1 * X
@@ -152,7 +152,7 @@ summary(Yhat)
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
     ##   1.509   2.844   5.206   6.187   8.184  23.399
 
-The regression equation is *Y* = *b*<sub>0</sub> + *b*<sub>1</sub>*X*.
+The regression equation *Y*^=*b*<sub>0</sub> + *b*<sub>1</sub>*X* is a statistical technique used to explain or predict the behavior of a dependent variable.
 
 The slope coefficient *b*<sub>1</sub> is the rate of change in Y as X changes (steepness of a line).
 
@@ -162,31 +162,31 @@ The intercept term *b*<sub>0</sub> is the expected mean value of Y when all X = 
 Yhat = b0 + b1 * 0
 ```
 
-Predicted salary (in millions) for a player who scores 0 points: 1.5090879
+Predicted salary (in millions) for a player who scores 0 points: *1.51*
 
 ``` r
 Yhat = b0 + b1 * 100
 ```
 
-Predicted salary (in millions) for a player who scores 100 points: 2.3648466
+Predicted salary (in millions) for a player who scores 100 points: *2.36*
 
 ``` r
 Yhat = b0 + b1 * 500
 ```
 
-Predicted salary (in millions) for a player who scores 500 points: 5.7878818
+Predicted salary (in millions) for a player who scores 500 points: *5.79*
 
 ``` r
 Yhat = b0 + b1 * 1000
 ```
 
-Predicted salary (in millions) for a player who scores 1000 points: 10.0666758
+Predicted salary (in millions) for a player who scores 1000 points: *10.07*
 
 ``` r
 Yhat = b0 + b1 * 2000
 ```
 
-Predicted salary (in millions) for a player who scores 2000 points: 18.6242638
+Predicted salary (in millions) for a player who scores 2000 points: *18.62*
 
 ------------------------------------------------------------------------
 
@@ -227,19 +227,19 @@ summary(e)
 RSS = sum((e)^2)
 ```
 
-The Residual Sum of Squares: 8.722528110^{4}
+The Residual Sum of Squares: *87225.28*
 
 ``` r
 TSS = sum((Y - y)^2)
 ```
 
-The Total Sum of Squares: 1.900580210^{4}
+The Total Sum of Squares: *19005.80*
 
 ``` r
 Rsquared = 1 - (RSS / TSS)
 ```
 
-The coefficient of determination *R*<sup>2</sup>: -3.5894028
+The coefficient of determination *R*<sup>2</sup>: *-3.59*
 
 ------------------------------------------------------------------------
 
@@ -272,7 +272,7 @@ boxplot(salary_millions ~ position,  xlab = "Position", ylab = "Salary (in milli
 
 ![](hw01-vitali-shypko_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-35-1.png)
 
-From this scatterplot
+From this scatterplot there is no real dependence between positions and salaries. Center players tend to make a bit more money on average and their salaries are the most spread out.
 
 ------------------------------------------------------------------------
 
