@@ -1,0 +1,93 @@
+---
+title: "HW 02 - Basics of Data Frames"
+author: "Vitali Shypko"
+date: "9/24/2017"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Import the data in R
+
+```{r}
+# import data using read.csv() with specified column types
+colClass_csv = c("character", # Player
+                 "character", # Team
+                 "factor",    # Position
+                 "character", # Experience
+                 "double",    # Salary
+                 "integer",   # Rank
+                 "integer",   # Age
+                 "integer",   # GP
+                 "integer",   # GS
+                 "integer",   # MIN
+                 "integer",   # FGM
+                 "integer",   # FGA
+                 "integer",   # Points3               
+                 "integer",   # Points3_atts
+                 "integer",   # Points2
+                 "integer",   # Points2_atts
+                 "integer",   # FTM
+                 "integer",   # FTA
+                 "integer",   # OREB
+                 "integer",   # DREB
+                 "integer",   # AST
+                 "integer",   # STL
+                 "integer",   # BLK
+                 "integer")   # TO
+
+players_stat_base <- read.csv('data/nba2017-player-statistics.csv', stringsAsFactors = FALSE, 
+                              colClasses = colClass_csv)
+str(players_stat_base)
+```
+
+```{r}
+# import data using readr's read_csv() with specified column types
+library("readr")
+players_stat_readr <- read_csv('data/nba2017-player-statistics.csv', 
+                               col_types = cols(
+                                 col_character(), # Player
+                                 col_character(), # Team
+                                 col_factor(c("C", "PF", "PG", "SF", "SG")),    # Position
+                                 col_character(), # Experience
+                                 col_double(),    # Salary
+                                 col_integer(),   # Rank
+                                 col_integer(),   # Age
+                                 col_integer(),   # GP
+                                 col_integer(),   # GS
+                                 col_integer(),   # MIN
+                                 col_integer(),   # FGM
+                                 col_integer(),   # FGA
+                                 col_integer(),   # Points3               
+                                 col_integer(),   # Points3_atts
+                                 col_integer(),   # Points2
+                                 col_integer(),   # Points2_atts
+                                 col_integer(),   # FTM
+                                 col_integer(),   # FTA
+                                 col_integer(),   # OREB
+                                 col_integer(),   # DREB
+                                 col_integer(),   # AST
+                                 col_integer(),   # STL
+                                 col_integer(),   # BLK
+                                 col_integer()))
+str(players_stat_readr)
+```
+
+### Right after importing the data
+
+```{r}
+# replace all the occurences of "R" in Experience column and convert the column to integers.
+# column conversion happens implicitly
+players_stat_base$Experience <- as.integer(replace(players_stat_base$Experience,
+                                                   players_stat_base$Experience=="R", 1))
+players_stat_readr$Experience <- as.integer(replace(players_stat_readr$Experience,
+                                                    players_stat_readr$Experience=="R", 1))
+```
+
+### Performance of players
+
+```{r}
+
+```
