@@ -8,7 +8,7 @@ Sample link for the data source of a given team (Golden State Warriors): https:/
 * There are 441 rows in the .csv file.
 * There are 24 columns in the .csv file.
 * The column labels are: "Player", "Team", "Position", "Experience", "Salary", "Rank", "Age", "GP", "GS", "MIN", "FGM", "FGA", "Points3", "Points3_atts", "Points2", "Points2_atts", "FTM", "FTA", "OREB", "DREB", "AST", "STL", "BLK", "TO".
-* #### Description of variables:
+* Description of variables:
     - Player: first and last names of player
     - Team: 3-letter team abbreviation
     - Position: player’s position
