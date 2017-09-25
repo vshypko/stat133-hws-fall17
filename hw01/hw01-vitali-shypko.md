@@ -159,31 +159,31 @@ The slope coefficient *b*<sub>1</sub> is the rate of change in Y as X changes (s
 The intercept term *b*<sub>0</sub> is the expected mean value of Y when all X = 0 (indicates the location where the line intersects an axis).
 
 ``` r
-Yhat = b0 + b1 * 0
+Yhat_0 = b0 + b1 * 0
 ```
 
 Predicted salary (in millions) for a player who scores 0 points: *1.51*
 
 ``` r
-Yhat = b0 + b1 * 100
+Yhat_100 = b0 + b1 * 100
 ```
 
 Predicted salary (in millions) for a player who scores 100 points: *2.36*
 
 ``` r
-Yhat = b0 + b1 * 500
+Yhat_500 = b0 + b1 * 500
 ```
 
 Predicted salary (in millions) for a player who scores 500 points: *5.79*
 
 ``` r
-Yhat = b0 + b1 * 1000
+Yhat_1000 = b0 + b1 * 1000
 ```
 
 Predicted salary (in millions) for a player who scores 1000 points: *10.07*
 
 ``` r
-Yhat = b0 + b1 * 2000
+Yhat_2000 = b0 + b1 * 2000
 ```
 
 Predicted salary (in millions) for a player who scores 2000 points: *18.62*
@@ -221,13 +221,13 @@ summary(e)
 ```
 
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    ## -18.614 -17.334 -15.124 -12.438  -9.374  12.336
+    ## -14.187  -2.792  -1.095   0.000   2.556  18.814
 
 ``` r
 RSS = sum((e)^2)
 ```
 
-The Residual Sum of Squares: *87225.28*
+The Residual Sum of Squares: *11300.30*
 
 ``` r
 TSS = sum((Y - y)^2)
@@ -239,7 +239,7 @@ The Total Sum of Squares: *19005.80*
 Rsquared = 1 - (RSS / TSS)
 ```
 
-The coefficient of determination *R*<sup>2</sup>: *-3.59*
+The coefficient of determination *R*<sup>2</sup>: *0.41*
 
 ------------------------------------------------------------------------
 

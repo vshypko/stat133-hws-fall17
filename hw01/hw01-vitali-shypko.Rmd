@@ -151,35 +151,35 @@ The slope coefficient $b_1$ is the rate of change in Y as X changes (steepness o
 The intercept term $b_0$ is the expected mean value of Y when all X = 0 (indicates the location where the line intersects an axis).
 
 ```{r}
-Yhat = b0 + b1 * 0
+Yhat_0 = b0 + b1 * 0
 ```
 
-Predicted salary (in millions) for a player who scores 0 points: _`r sprintf("%.2f", Yhat)`_
+Predicted salary (in millions) for a player who scores 0 points: _`r sprintf("%.2f", Yhat_0)`_
 
 
 ```{r}
-Yhat = b0 + b1 * 100
+Yhat_100 = b0 + b1 * 100
 ```
 
-Predicted salary (in millions) for a player who scores 100 points: _`r sprintf("%.2f", Yhat)`_
+Predicted salary (in millions) for a player who scores 100 points: _`r sprintf("%.2f", Yhat_100)`_
 
 ```{r}
-Yhat = b0 + b1 * 500
+Yhat_500 = b0 + b1 * 500
 ```
 
-Predicted salary (in millions) for a player who scores 500 points: _`r sprintf("%.2f", Yhat)`_
+Predicted salary (in millions) for a player who scores 500 points: _`r sprintf("%.2f", Yhat_500)`_
 
 ```{r}
-Yhat = b0 + b1 * 1000
+Yhat_1000 = b0 + b1 * 1000
 ```
 
-Predicted salary (in millions) for a player who scores 1000 points: _`r sprintf("%.2f", Yhat)`_
+Predicted salary (in millions) for a player who scores 1000 points: _`r sprintf("%.2f", Yhat_1000)`_
 
 ```{r}
-Yhat = b0 + b1 * 2000
+Yhat_2000 = b0 + b1 * 2000
 ```
 
-Predicted salary (in millions) for a player who scores 2000 points: _`r sprintf("%.2f", Yhat)`_
+Predicted salary (in millions) for a player who scores 2000 points: _`r sprintf("%.2f", Yhat_2000)`_
 
 ***
 
