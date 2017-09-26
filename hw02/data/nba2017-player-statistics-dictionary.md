@@ -1,8 +1,8 @@
 ### HW02 - Basics of Data Frames
 ### Data dictionary for player statistics
 
-Main source: www.basketball-reference.com
-Sample link for the data source of a given team (Golden State Warriors): https://www.basketball-reference.com/teams/GSW/2017.html
+#### Main source: www.basketball-reference.com
+#### Sample link for the data source of a given team (Golden State Warriors): https://www.basketball-reference.com/teams/GSW/2017.html
 
 * The data is about NBA players' statistics for the 2016/2017 season.
 * There are 441 rows in the .csv file.

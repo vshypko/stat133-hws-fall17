@@ -1,7 +1,7 @@
 HW 02 - Basics of Data Frames
 ================
 Vitali Shypko
-9/24/2017
+9/25/2017
 
 ### Import the data in R
 
@@ -32,7 +32,8 @@ colClass_csv = c("character", # Player
                  "integer",   # BLK
                  "integer")   # TO
 
-players_stat_base <- read.csv('data/nba2017-player-statistics.csv', stringsAsFactors = FALSE, 
+players_stat_base <- read.csv('data/nba2017-player-statistics.csv',
+                              stringsAsFactors = FALSE,
                               colClasses = colClass_csv)
 str(players_stat_base)
 ```
@@ -182,7 +183,7 @@ str(players_stat_readr)
 ### Right after importing the data
 
 ``` r
-# replace all the occurences of "R" in Experience column and convert the column to integers.
+# replace all the occurences of "R" in Experience column and convert the column to integers
 # column conversion happens implicitly
 players_stat_base$Experience <- as.integer(replace(players_stat_base$Experience,
                                                    players_stat_base$Experience=="R", 1))
@@ -197,7 +198,9 @@ players_stat_readr$Experience <- as.integer(replace(players_stat_readr$Experienc
 ``` r
 players_stat_base$Missed_FG = players_stat_base$FGA - players_stat_base$FGM
 players_stat_base$Missed_FT = players_stat_base$FTA - players_stat_base$FTM
-players_stat_base$PTS = players_stat_base$Points2 + players_stat_base$Points3 + players_stat_base$FTM + players_stat_base$FGM
+players_stat_base$PTS = (players_stat_base$FTM 
+                        + 2 * players_stat_base$Points2 
+                        + 3 * players_stat_base$Points3)
 players_stat_base$REB = players_stat_base$OREB + players_stat_base$DREB
 players_stat_base$MPG = players_stat_base$MIN / players_stat_base$GP
 Missed_FG = players_stat_base$Missed_FG
@@ -218,7 +221,7 @@ summary(EFF)
 ```
 
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    ##  -0.600   5.000   8.016   9.322  12.373  31.370
+    ##  -0.600   5.452   9.090  10.137  13.247  33.840
 
 ``` r
 hist(EFF, main = "Histogram of Efficiency (EFF)", xlab = "EFF", ylab = "Frequency", col = "gray")
@@ -227,31 +230,32 @@ hist(EFF, main = "Histogram of Efficiency (EFF)", xlab = "EFF", ylab = "Frequenc
 ![](hw02-vitali-shypko_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-4-1.png)
 
 ``` r
-# Player name, team, salary, and EFF value of the top-10 players by EFF in decreasing order
-head(players_stat_base[order(players_stat_base$EFF, decreasing = TRUE), c("Player", "Team", "Salary", "EFF")], n = 10)
+# player name, team, salary, and EFF value of the top-10 players by EFF in decreasing order
+head(players_stat_base[order(players_stat_base$EFF, decreasing = TRUE), 
+                       c("Player", "Team", "Salary", "EFF")], n = 10)
 ```
 
     ##                    Player Team   Salary      EFF
-    ## 305     Russell Westbrook  OKC 26540100 31.37037
-    ## 355         Anthony Davis  NOP 22116750 30.62667
-    ## 28           LeBron James  CLE 30963450 29.29730
-    ## 256          James Harden  HOU 26540100 29.11111
-    ## 404    Karl-Anthony Towns  MIN  5960160 29.09756
-    ## 228          Kevin Durant  GSW 26540100 28.30645
-    ## 74  Giannis Antetokounmpo  MIL  2995421 27.76250
-    ## 359      DeMarcus Cousins  NOP 16957900 25.82353
+    ## 305     Russell Westbrook  OKC 26540100 33.83951
+    ## 256          James Harden  HOU 26540100 32.34568
+    ## 355         Anthony Davis  NOP 22116750 31.16000
+    ## 28           LeBron James  CLE 30963450 30.97297
+    ## 404    Karl-Anthony Towns  MIN  5960160 30.32927
+    ## 228          Kevin Durant  GSW 26540100 30.19355
+    ## 74  Giannis Antetokounmpo  MIL  2995421 28.37500
+    ## 359      DeMarcus Cousins  NOP 16957900 27.94118
+    ## 110          Jimmy Butler  CHI 17552209 25.60526
     ## 119      Hassan Whiteside  MIA 22116750 25.36364
-    ## 292           Rudy Gobert  UTA  2121288 24.80247
 
 ``` r
-# Provide the names of the players that have a negative EFF.
+# the names of the players that have a negative EFF.
 players_stat_base[players_stat_base$EFF < 0, "Player"]
 ```
 
     ## [1] "Patricio Garino"
 
 ``` r
-# Use the function cor() to compute the correlation coefficients between EFF and all the variables used in the EFF formula.
+# calculate correlation coefficients between EFF and all the variables used in the EFF formula (using cor())
 EFF_PTS = cor(EFF, PTS)
 EFF_REB = cor(EFF, REB)
 EFF_STL = cor(EFF, STL)
@@ -263,16 +267,22 @@ EFF_TO = -cor(EFF, TO)
 ```
 
 ``` r
-# Display the computed correlations in descending order, either in a vector or a data frame. And create a barchart with the correlations (bars in decreasing order) like the one below.
-EFF_cor <- sort(c(EFF_PTS, EFF_REB, EFF_STL, EFF_AST, EFF_BLK, EFF_Missed_FT, EFF_Missed_FG, EFF_TO), decreasing = TRUE)
+# display the computed correlations in descending order
+EFF_cor <- sort(c(EFF_PTS, EFF_REB, EFF_STL, EFF_AST, EFF_BLK, EFF_Missed_FT, EFF_Missed_FG, EFF_TO),
+                decreasing = TRUE)
 EFF_cor
 ```
 
-    ## [1]  0.8488828  0.7891977  0.6742724  0.6442939  0.6035932 -0.7298862
-    ## [7] -0.7505338 -0.7829069
+    ## [1]  0.8588644  0.7634501  0.6957286  0.6689232  0.5679571 -0.7271456
+    ## [7] -0.7722477 -0.8003289
 
 ``` r
-barplot(EFF_cor, main = "Correlations between Player Stats and EFF", col = c("gray", "gray", "gray", "gray", "gray", "red", "red", "red"))
+# Create a barchart with the correlations
+barplot(EFF_cor, main = "Correlations between Player Stats and EFF",
+        ylim = c(-1, 1),
+        col = c("gray", "gray", "gray", "gray", "gray", "red", "red", "red"),
+        names.arg = c("PTS", "REB", "STL", "AST", "BLK", "Missed_FT", "Missed_FG", "TO"),
+        cex.names = 0.68)
 ```
 
 ![](hw02-vitali-shypko_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png)
@@ -283,7 +293,9 @@ barplot(EFF_cor, main = "Correlations between Player Stats and EFF", col = c("gr
 
 ``` r
 # a scatterplot between Efficiency and Salary
-plot(players_stat_base$EFF, players_stat_base$Salary, pch=16, col = "darkgray", cex = 0.95, cex.lab = 1.1, cex.main = 1.5, xlab = "Efficiency", ylab = "Salary", main = "Efficiency and Salary")
+plot(players_stat_base$EFF, players_stat_base$Salary, pch=16, col = "darkgray", 
+     cex = 0.95, cex.lab = 1.1, cex.main = 1.5,
+     xlab = "Efficiency", ylab = "Salary", main = "Efficiency and Salary")
 lines(lowess(players_stat_base$EFF, players_stat_base$Salary), lwd = "4", col = "red")
 ```
 
@@ -293,13 +305,16 @@ lines(lowess(players_stat_base$EFF, players_stat_base$Salary), lwd = "4", col = 
 cor(players_stat_base$EFF, players_stat_base$Salary)
 ```
 
-    ## [1] 0.6430885
+    ## [1] 0.655624
 
 There seems to be a dependency between Salary and Efficiency. In general, the more efficient a player is, the higher his salary is.
 
 ``` r
+# players that have an MPG value of 20 or more minutes per game
 players2 <- players_stat_base[players_stat_base$MPG >= 20, ]
-plot(players2$EFF, players2$Salary, pch=16, col = "darkgray", cex = 0.95, cex.lab = 1.1, cex.main = 1.5, xlab = "Efficiency", ylab = "Salary", main = "Efficiency and Salary (for players with MPG >= 20)")
+plot(players2$EFF, players2$Salary, pch=16, col = "darkgray",
+     cex = 0.95, cex.lab = 1.1, cex.main = 1.5,
+     xlab = "Efficiency", ylab = "Salary", main = "Efficiency and Salary (for players with MPG >= 20)")
 lines(lowess(players2$EFF, players2$Salary), lwd = "4", col = "red")
 ```
 
@@ -309,9 +324,9 @@ lines(lowess(players2$EFF, players2$Salary), lwd = "4", col = "red")
 cor(players2$EFF, players2$Salary)
 ```
 
-    ## [1] 0.522513
+    ## [1] 0.5367224
 
-What can you say about the relationship between these two variables for the set of “more established players”?
+From the provided reading I found out that there is a cap for NBA player salaries. Rookies can't get paid more than a set dollar amount. That salary cap goes up gradually with the years of experience in the league. Since rookies tend to play less games, most of them are not included in the set of "more established players". At the level of efficiency of about 12, we see that the salary starts to grow steeper than for players with the efficiency of less than 12.
 
 ------------------------------------------------------------------------
 
