@@ -84,9 +84,9 @@ str(players_stat_readr)
 # replace all the occurences of "R" in Experience column and convert the column to integers
 # column conversion happens implicitly
 players_stat_base$Experience <- as.integer(replace(players_stat_base$Experience,
-                                                   players_stat_base$Experience=="R", 1))
+                                                   players_stat_base$Experience=="R", 0))
 players_stat_readr$Experience <- as.integer(replace(players_stat_readr$Experience,
-                                                    players_stat_readr$Experience=="R", 1))
+                                                    players_stat_readr$Experience=="R", 0))
 ```
 
 ***
