@@ -1,0 +1,10 @@
+---
+title: "HW 03 - Ranking NBA Teams"
+author: "Vitali Shypko"
+date: "10/14/2017"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
