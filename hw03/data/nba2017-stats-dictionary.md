@@ -1,37 +1,34 @@
 ### HW03 - Ranking NBA Teams
-### Data dictionary for player statistics
+### Data dictionary for player statistics for 2016/2017 NBA season
 
 #### Main source: www.basketball-reference.com
 #### Downloaded from: https://github.com/ucb-stat133/stat133-fall-2017/blob/master/data/nba2017-stats.csv
 
 * The data is about NBA players' statistics for the 2016/2017 season.
-* There are 442 rows in the .csv file.
-* There are 24 columns in the .csv file.
-* The column labels are: "Player", "Team", "Position", "Experience", "Salary", "Rank", "Age", "GP", "GS", "MIN", "FGM", "FGA", "Points3", "Points3_atts", "Points2", "Points2_atts", "FTM", "FTA", "OREB", "DREB", "AST", "STL", "BLK", "TO".
+* There are 441 rows in the .csv file.
+* There are 22 columns in the .csv file.
+* The column labels are: "player", "games_played", "minutes", "field_goals_made", "field_goals_atts", "field_goals_perc", "points3_made", "points3_atts", "points3_perc", "points2_made", "points2_atts", "points2_perc", "points1_made", "points1_atts", "points1_perc", "off_rebounds", "def_rebounds", "assists", "steals", "blocks", "turnovers", "fouls".
 * Description of variables:
-    - Player: first and last names of player
-    - Team: 3-letter team abbreviation
-    - Position: player’s position
-    - Experience: years of experience in NBA (a value of R means rookie)
-    - Salary: player salary in dollars
-    - Rank: Rank of player in his team
-    - Age: Age of Player at the start of February 1st of that season.
-    - GP: Games Played furing regular season
-    - GS: Games Started
-    - MIN: Minutes Played during regular season
-    - FGM: Field Goals Made
-    - FGA: Field Goal Attempts
-    - Points3: 3-Point Field Goals
-    - Points3_atts: 3-Point Field Goal Attempts
-    - Points2: 2-Point Field Goals
-    - Points2_atts: 2-Point Field Goal Attempts
-    - FTM: Free Throws Made
-    - FTA: Free Throw Attempts
-    - ORB: Offensive Rebounds
-    - DRB: Defensive Rebounds
-    - TRB: Total Rebounds
-    - AST: Assists
-    - STL: Steals
-    - BLK: Blocks
-    - TO: Turnovers
-* There are no missing values in the data set.
+    - player: first and last names of player
+    - games_played: games played furing regular season
+    - minutes: minutes played during regular season
+    - field_goals_made: field goals made
+    - field_goals_atts: field goal attempts
+    - field_goals_perc: percentage of field goals made
+    - points3_made: 3-point field goals
+    - points3_atts: 3-point field goal attempts
+    - points3_perc: percentage of 3-point field goals made
+    - points2_made: 2-point field goals
+    - points2_atts: 2-point field goal attempts
+    - points2_perc percentage of 2-point field goals made
+    - points1_made: free throws made
+    - points1_atts: free throw attempts
+    - points1_perc: free throws made percentage
+    - off_rebounds: offensive rebounds
+    - def_rebounds: defensive rebounds
+    - assists: number of assists
+    - steals: number of steals
+    - blocks: number of blocks
+    - turnovers: number of turnovers
+    - fouls: number of fouls
+* There are some missing values in the data set (marked as NA).
