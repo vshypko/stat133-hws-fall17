@@ -36,8 +36,7 @@ dat_roster_stats <- merge(dat_roster, dat_stats)
 # Create nba2017-teams.csv
 team <- dat_roster_stats$team
 experience <- dat_roster_stats$experience
-salary <- as.numeric(formatC((dat_roster_stats$salary / 1000000), digits = 2, 
-                             format = 'f')) # in millions with 2 decimal digits
+salary <- round(dat_roster_stats$salary / 1000000, 2)
 points3 <- dat_roster_stats$points3_made
 points2 <- dat_roster_stats$points2_made
 free_throws <- dat_roster_stats$points1_made
@@ -49,8 +48,7 @@ steals <- dat_roster_stats$steals
 blocks <- dat_roster_stats$blocks
 turnovers <- dat_roster_stats$turnovers
 fouls <- dat_roster_stats$fouls
-efficiency <- as.numeric(formatC((dat_roster_stats$efficiency), digits = 2, 
-                                 format = 'f')) # 2 decimal digits
+efficiency <- round(dat_roster_stats$efficiency, 2)
 df <- data.frame(team, experience, salary, points3, points2, free_throws,
                    points, off_rebounds, def_rebounds, assists, steals, blocks,
                    turnovers, fouls, efficiency, stringsAsFactors = FALSE)
