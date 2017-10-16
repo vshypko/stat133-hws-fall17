@@ -151,8 +151,8 @@ ggplot(PC, aes(x = PC1, y = PC2)) +
   ylab('PC2') +
   ggtitle('PCA plot (PC1 and PC2)') +
   geom_text(aes(label = team)) +
-  geom_hline(yintercept = 0, colour = 'darkgray', size = 1) +
-  geom_vline(xintercept = 0, colour = 'darkgray', size = 1) +
+  geom_hline(yintercept = 0, colour = 'darkgray', size = 0.7) +
+  geom_vline(xintercept = 0, colour = 'darkgray', size = 0.7) +
   scale_y_reverse()
 ```
 
