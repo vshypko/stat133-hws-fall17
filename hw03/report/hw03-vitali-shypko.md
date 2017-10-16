@@ -1,7 +1,7 @@
 HW 03 - Ranking NBA Teams
 ================
 Vitali Shypko
-10/14/2017
+10/15/2017
 
 ### Ranking teams
 
@@ -28,7 +28,29 @@ library(readr)
 ```
 
 ``` r
-teams <- read.csv('../data/nba2017-teams.csv', stringsAsFactors = FALSE)
+teams <- read_csv('../data/nba2017-teams.csv')
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   team = col_character(),
+    ##   experience = col_integer(),
+    ##   salary = col_double(),
+    ##   points3 = col_integer(),
+    ##   points2 = col_integer(),
+    ##   free_throws = col_integer(),
+    ##   points = col_integer(),
+    ##   off_rebounds = col_integer(),
+    ##   def_rebounds = col_integer(),
+    ##   assists = col_integer(),
+    ##   steals = col_integer(),
+    ##   blocks = col_integer(),
+    ##   turnovers = col_integer(),
+    ##   fouls = col_integer(),
+    ##   efficiency = col_double()
+    ## )
+
+``` r
 teams <- arrange(teams, desc(teams$salary))
 ```
 
@@ -41,7 +63,7 @@ ggplot(teams, aes(x = reorder(team, salary), y = salary)) +
   xlab('Team') +
   ylab('Salary (in millions)') +
   ggtitle('NBA Teams ranked by Total Salary') +
-  geom_hline(aes(yintercept = mean(teams$salary)), colour = 'darksalmon', size = 2) +
+  geom_hline(aes(yintercept = mean(teams$salary)), colour = 'darksalmon', size = 2, alpha = 0.8) +
   coord_flip()
 ```
 
@@ -54,7 +76,7 @@ ggplot(teams, aes(x = reorder(team, points), y = points)) +
   xlab('Team') +
   ylab('Total Points') +
   ggtitle('NBA Teams ranked by Total Points') +
-  geom_hline(aes(yintercept = mean(teams$points)), colour = 'darksalmon', size = 2) +
+  geom_hline(aes(yintercept = mean(teams$points)), colour = 'darksalmon', size = 2, alpha = 0.8) +
   coord_flip()
 ```
 
@@ -67,7 +89,7 @@ ggplot(teams, aes(x = reorder(team, efficiency), y = efficiency)) +
   xlab('Team') +
   ylab('Total Efficiency') +
   ggtitle('NBA Teams ranked by Total Efficiency') +
-  geom_hline(aes(yintercept = mean(teams$efficiency)), colour = 'darksalmon', size = 2) +
+  geom_hline(aes(yintercept = mean(teams$efficiency)), colour = 'darksalmon', size = 2, alpha = 0.8) +
   coord_flip()
 ```
 
@@ -88,51 +110,49 @@ steals <- teams$steals
 blocks <- teams$blocks
 turnovers <- teams$turnovers
 fouls <- teams$fouls
-
 team <- teams$team
 
 pca_df <- data.frame(points3, points2, free_throws, off_rebounds, def_rebounds, assists,
                  steals, blocks, turnovers, fouls, stringsAsFactors = FALSE)
 pca <- prcomp(pca_df, scale. = TRUE)
+pca$team = team
 
 eigenvalue = round(pca$sdev^2, 4)
 prop = round(pca$sdev^2 / sum(pca$sdev^2), 4)
-cumprop = cumsum(prop)
+cumprop = round(cumsum(pca$sdev^2 / sum(pca$sdev^2)), 4)
 eigenvalues <- data.frame(eigenvalue, prop, cumprop)
-PC = data.frame(pca$x, eigenvalues, team, stringsAsFactors = FALSE)
-PC1 = PC[ , 1]
-PC1 = PC[ , 2]
-head(PC, 5)
+eigenvalues # data frame with the eigenvalues
 ```
 
-    ##          PC1        PC2        PC3        PC4         PC5        PC6
-    ## 1  1.1429197 -1.9254795  1.5294444 -0.9201885  0.51632174  0.8038837
-    ## 2 -1.6926408 -0.7550453  0.7169699 -0.1673084 -0.06326830 -0.9511131
-    ## 3 -0.6469827  1.3120040  0.4496369 -0.0321004 -0.04584683 -1.5195812
-    ## 4 -0.6071090  0.4667924  1.0158464  0.5798048 -0.09939715 -0.9225112
-    ## 5 -2.2990719 -0.1427248 -1.2177938 -0.7466215  0.50765029 -0.1294754
-    ##           PC7        PC8         PC9        PC10 eigenvalue   prop cumprop
-    ## 1 -0.07660705  0.3561447 -0.29276673  0.29193783     4.6959 0.4696  0.4696
-    ## 2 -0.02461385  0.6795998  0.41729081  0.06438414     1.7020 0.1702  0.6398
-    ## 3 -0.51375147 -0.5910190  0.23466108  0.20892464     0.9795 0.0980  0.7378
-    ## 4  0.74842650 -0.6081984  0.29012417 -0.57927711     0.7717 0.0772  0.8150
-    ## 5 -0.43262618 -0.2741142  0.03513969  0.05141205     0.5341 0.0534  0.8684
-    ##   team
-    ## 1  CLE
-    ## 2  LAC
-    ## 3  TOR
-    ## 4  MEM
-    ## 5  SAS
+    ##    eigenvalue   prop cumprop
+    ## 1      4.6959 0.4696  0.4696
+    ## 2      1.7020 0.1702  0.6398
+    ## 3      0.9795 0.0980  0.7377
+    ## 4      0.7717 0.0772  0.8149
+    ## 5      0.5341 0.0534  0.8683
+    ## 6      0.4780 0.0478  0.9161
+    ## 7      0.3822 0.0382  0.9543
+    ## 8      0.2603 0.0260  0.9804
+    ## 9      0.1336 0.0134  0.9937
+    ## 10     0.0627 0.0063  1.0000
+
+``` r
+PC1 = -pca$x[ , 1]
+PC2 = -pca$x[ , 2]
+PC = data.frame(PC1, PC2, team, stringsAsFactors = FALSE) # PC1, PC2, and corresponding teams.
+PC1 = PC[ , 1]
+PC2 = PC[ , 2]
+```
 
 ``` r
 # PCA plot (PC1 and PC2)
-ggplot(PC, aes(x = -PC1, y = -PC2)) +
+ggplot(PC, aes(x = PC1, y = PC2)) +
   xlab('PC1') +
   ylab('PC2') +
   ggtitle('PCA plot (PC1 and PC2)') +
   geom_text(aes(label = team)) +
-  geom_hline(yintercept = 0, colour = 'gray') +
-  geom_vline(xintercept = 0, colour = 'gray') +
+  geom_hline(yintercept = 0, colour = 'darkgray', size = 1) +
+  geom_vline(xintercept = 0, colour = 'darkgray', size = 1) +
   scale_y_reverse()
 ```
 
@@ -143,7 +163,6 @@ ggplot(PC, aes(x = -PC1, y = -PC2)) +
 ``` r
 # Transformed score
 s1 = 100 * ((PC1 - min(PC1)) / (max(PC1) - min(PC1)))
-PC$s1 = s1
 ```
 
 ``` r
@@ -164,7 +183,7 @@ Reflect on what was hard/easy, problems you solved, helpful tutorials you read, 
 
 -   Was this your first time working on a project with such file structure? If yes, how do you feel about it?
 
-> It was my first project with such file structure. However, in software engineering projects I worked on there was a similar project structure, so I am not entirely new to it. I like when things are organized.
+> It was my first project with such file structure. However, in software engineering projects (especially web) I worked on there was a similar project structure, so I am not entirely new to it. I like when things are organized.
 
 -   Was this your first time using relative paths? If yes, can you tell why they are important for reproducibility purposes?
 
@@ -188,11 +207,11 @@ Reflect on what was hard/easy, problems you solved, helpful tutorials you read, 
 
 -   How much time did it take to complete this HW?
 
-> It took me about 6 hours to complete this HW.
+> It took me about 8 hours to complete this HW.
 
 -   What was the most time consuming part?
 
-> Making graphs exactly the way they looks like in the instructions was time consuming as well as PCA part. I couldn't get draw the last graph with transformed score s1 for quite a while.
+> Making graphs exactly the way they looks like in the instructions was time consuming as well as PCA part. I couldn't draw the last graph with transformed score s1 for quite a while (the reason was that I stored PC1 in the dataframe with incorect sign).
 
 -   Was there anything interesting?
 

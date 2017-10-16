@@ -5,7 +5,7 @@
 # Input(s): nba2017-roster.csv, nba2017-stats.csv
 # Output(s): nba2017-teams.csv
 # Author: Vitali Shypko
-# Date: 10-14-2017
+# Date: 10-15-2017
 # ===================================================================
 
 # Packages
@@ -72,7 +72,7 @@ teams <- summarise(
 )
 
 # Export teams summary output to the specified file
-sink(file = '../data/teams-summary.txt')
+sink(file = '../output/teams-summary.txt')
 summary(teams)
 sink()
 
