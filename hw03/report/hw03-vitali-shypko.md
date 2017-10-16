@@ -3,7 +3,7 @@ HW 03 - Ranking NBA Teams
 Vitali Shypko
 10/15/2017
 
-### Ranking teams
+### Ranking of Teams
 
 #### Import the data
 
