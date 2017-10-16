@@ -59,11 +59,11 @@ teams <- arrange(teams, desc(teams$salary))
 ``` r
 # NBA Teams ranked by Total Salary
 ggplot(teams, aes(x = reorder(team, salary), y = salary)) +
-  geom_bar(stat = 'identity', fill = 'gray', colour = 'gray') +
+  geom_bar(stat = 'identity', fill = 'darkgray', colour = 'darkgray') +
   xlab('Team') +
   ylab('Salary (in millions)') +
   ggtitle('NBA Teams ranked by Total Salary') +
-  geom_hline(aes(yintercept = mean(teams$salary)), colour = 'darksalmon', size = 2, alpha = 0.8) +
+  geom_hline(aes(yintercept = mean(teams$salary)), colour = 'coral3', size = 2, alpha = 0.8) +
   coord_flip()
 ```
 
@@ -72,11 +72,11 @@ ggplot(teams, aes(x = reorder(team, salary), y = salary)) +
 ``` r
 # NBA Teams ranked by Total Points
 ggplot(teams, aes(x = reorder(team, points), y = points)) +
-  geom_bar(stat = 'identity', fill = 'gray', colour = 'gray') +
+  geom_bar(stat = 'identity', fill = 'darkgray', colour = 'darkgray') +
   xlab('Team') +
   ylab('Total Points') +
   ggtitle('NBA Teams ranked by Total Points') +
-  geom_hline(aes(yintercept = mean(teams$points)), colour = 'darksalmon', size = 2, alpha = 0.8) +
+  geom_hline(aes(yintercept = mean(teams$points)), colour = 'coral3', size = 2, alpha = 0.8) +
   coord_flip()
 ```
 
@@ -85,11 +85,11 @@ ggplot(teams, aes(x = reorder(team, points), y = points)) +
 ``` r
 # NBA Teams ranked by Total Efficiency
 ggplot(teams, aes(x = reorder(team, efficiency), y = efficiency)) +
-  geom_bar(stat = 'identity', fill = 'gray', colour = 'gray') +
+  geom_bar(stat = 'identity', fill = 'darkgray', colour = 'darkgray') +
   xlab('Team') +
   ylab('Total Efficiency') +
   ggtitle('NBA Teams ranked by Total Efficiency') +
-  geom_hline(aes(yintercept = mean(teams$efficiency)), colour = 'darksalmon', size = 2, alpha = 0.8) +
+  geom_hline(aes(yintercept = mean(teams$efficiency)), colour = 'coral3', size = 2, alpha = 0.8) +
   coord_flip()
 ```
 
@@ -168,7 +168,7 @@ s1 = 100 * ((PC1 - min(PC1)) / (max(PC1) - min(PC1)))
 ``` r
 # NBA Teams ranked by Total Salary
 ggplot(PC, aes(x = reorder(team, s1), y = s1)) +
-  geom_bar(stat = 'identity', fill = 'gray', colour = 'gray') +
+  geom_bar(stat = 'identity', fill = 'darkgray', colour = 'darkgray') +
   xlab('Team') +
   ylab('First PC (scaled from 0 to 100)') +
   ggtitle('NBA Teams ranked by scaled PC1') +
