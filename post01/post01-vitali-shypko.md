@@ -1,38 +1,30 @@
 Post 1: SQL vs. R (dplyr): similarities and differences
 ================
 Vitali Shypko
-10/21/2017
+10/30/2017
 
-#### Introduction
+As a Computer Science student with no prior experience in Statistics, I was not sure what to expect from the Statistics class. After a couple of lectures, I found out that we will learn R, which was also a completely new language to me. However, after doing a couple of labs and homeworks, it became evident that the things I am doing with R are very similar to the functionality of Structured Query Language (SQL) that is widely used for relational database management and software development in general (and that I am familiar with). After I realized that SQL is similar to R (especially to dplyr package), it became easier for me to understand what we are doing in the labs and how to make my R programs work as well as gave me better intuition in the class in general. This post is my attempt to shed the light on SQL for the students who are not familiar with the language and show the similarities and differences between SQL and R for students that know at least the basics of both languages.
 
-As a Computer Science student with no prior experience in Statistics, I did not know what exactly to expect from the class. After a couple of lectures, I found out that we will learn R, which was also a completely new language to me. However, after doing labs and homework, it became evident to me that the things I am currently doing with R are very similar to the functionality of Structured Query Language (SQL) that is widely used for databases and software development in general (and that I am familiar with). After I realized that SQL is similar to R (especially to dplyr package), it became easier for me to understand what we are doing in the labs and how to make my R programs work. This post is my attempt to shed the light on SQL for the students who are not familiar with the language as well as show the similarities and differences between SQL and R for students that know at least the basics of both languages.
+------------------------------------------------------------------------
 
-For the demonstrations of differences and similarities between dplyr and SQL, I will use R package called [SQLdf](https://cran.r-project.org/web/packages/sqldf/index.html). Let's prepare R Studio to run experiments: First, create a new R Markdown project and install *sqldf* package with the following line of code:
+For the demonstrations of differences and similarities between dplyr and SQL, I will use R package called [SQLdf](https://cran.r-project.org/web/packages/sqldf/index.html). Let's prepare R Studio to run some experiments: First, create a new R Markdown project and install *sqldf* package with the following line of code:
 
 ``` r
 install.packages("sqldf")
 ```
 
-After the package is installed, let's [download](https://raw.githubusercontent.com/ucb-stat133/stat133-fall-2017/master/data/nba2017-roster.csv) download the familiar NBA players data from the course github repository and put it into data folder of our new project. After that, we can use the `read.csv` function to load the .csv file and assign its data to a data frame players.
+After the package is installed, let's [download](https://raw.githubusercontent.com/ucb-stat133/stat133-fall-2017/master/data/nba2017-roster.csv) the familiar NBA players data from the course github repository and put it into data folder of our new project. After that, we can use the `read.csv` function as always to load the .csv file and assign its data to a data frame players.
 
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-    ## Loading required package: gsubfn
-
-    ## Loading required package: proto
+``` r
+library(dplyr, warn.conflicts = FALSE, quietly = TRUE)
+library(sqldf, warn.conflicts = FALSE, quietly = TRUE)
+```
 
     ## Could not load tcltk.  Will use slower R code instead.
 
-    ## Loading required package: RSQLite
+``` r
+players <- read.csv('data/nba2017-roster.csv', stringsAsFactors = FALSE)
+```
 
 We will go over all the major dplyr functions and their analogs in SQL. Just as a reminder, the dplyr's grammar consists of the following verbs:
 
@@ -48,7 +40,7 @@ We will go over all the major dplyr functions and their analogs in SQL. Just as 
 
 #### Filter
 
-Now, let's compare two ways to retrieve the information about Golden State Warriors players with more than 10 years of NBA experience using SQL and dplyr code:
+To start, let's compare two analogous ways to retrieve the information about Golden State Warriors players with more than 10 years of NBA experience using SQL and dplyr code:
 
 ``` r
 # dplyr code
@@ -78,13 +70,13 @@ sqldf("SELECT *
     4 Shaun Livingston  GSW       PG     79    192  31         11  5782450
     5    Zaza Pachulia  GSW        C     83    270  32         13  2898000
 
-As we see, the results provided by these code chunks are the same. Let's go over the SQL syntax. The typical template for a simple SQL query (that corresponds to the filter function in dplyr) is `SELECT columns FROM source WHERE condition1 AND condition2`. This template allows us to filter data (using dplyr terms) from a data frame. Notice that to replicate the `filter()` function behavior, we put '\*' after `SELECT`, which tells R Studio that we want to query all the columns.
+As we see, the results provided by these code chunks are the same. Let's go over the SQL syntax. The typical template for a simple SQL query that corresponds to the filter function in dplyr is `SELECT columns FROM source WHERE condition1 AND condition2`. This template allows us to filter data (using dplyr terms) from a data frame. Notice that to replicate the `filter()` function's behavior, we put '\*' after `SELECT`, which tells R Studio that we want to query all the columns from the table.
 
 ------------------------------------------------------------------------
 
 #### Select
 
-Since in most cases, we don't want all the columns from the table that satisfy a specific condition, let's go over `select()` function and it's analog in SQL. Say, we want to display player name, team, and age of the GSW players with more than 10 years of experience. We can do so using the following code:
+Since we usually want only specific columns from the table that satisfy provided conditions, let's go over `select()` function and it's analog in SQL. Say, we want to display *player name*, *team*, and *age* of the GSW players with more than 10 years of *experience*. We can do so using the following code:
 
 ``` r
 # dplyr code
@@ -121,7 +113,7 @@ Here, we see that adding a select statement with the column names that we need h
 
 #### Slice
 
-Sometimes, we don't need all the rows from the table resulting after we ran a query on it. For that purpose, there is a `slice()` function in dplyr. As you probably have guessed, there is a way to make SQL have this functionality as well. Let's only take a look at the first 3 rows of the previous query:
+Sometimes, we don't need all the rows from the table resulting after we ran a filtering query on it. For that purpose, there is a `slice()` function in dplyr. As you probably have guessed, there is a way to run a SQL query to achieve the same results. Let's take a look only at the first 3 rows of the previous query:
 
 ``` r
 # dplyr code
@@ -158,7 +150,7 @@ This is where the first noticeable difference between dplyr and SQL shows up. Us
 
 #### Arrange
 
-If we want data to be displayed in a particular order, in dplyr we use function `arrange()`. For the same purpose, there is an `ORDER BY` clause in SQL. Let's see an example of ordering GSW players with more than 10 years of experience in ascending order of their age and showing the first 4 results:
+If we want data to be displayed in a particular order, in dplyr we use function `arrange()`. For the same purpose, there is an `ORDER BY` clause in SQL. Let's see an example of ordering GSW players with more than 10 years of *experience* in ascending order of their *age* and showing the first 4 results:
 
 ``` r
 # dplyr code
@@ -197,7 +189,7 @@ sqldf("SELECT player, team, age
 
 #### Mutate
 
-There are cases where we want to either rename an existing column in the table or make a new column with new data and specify its name. In dplyr, for this purpose, we use `mutate()`. In SQL, we can provide columns that we want to modify right into the `SELECT` clause. Let's display GSW players with a new column - experience to salary in millions ratio.
+There are cases where we want to either rename an existing column in the table or make a new column with new data and specify its name. In dplyr, for this purpose, we use `mutate()`. In SQL, we can provide columns that we want to modify right into the `SELECT` clause. Let's display GSW players with a new column - *experience to salary in millions* ratio.
 
 ``` r
 # dplyr code
@@ -234,13 +226,13 @@ sqldf("SELECT player, team, ROUND((experience / salary * 1000000), 2) as exp_sal
     4 Zaza Pachulia  GSW       4.49
     5     Ian Clark  GSW       2.95
 
-Notice that in both dplyr and SQL we have a function round that round a number to the specified number of decimal places. Also, note that in both dplyr and SQL there is a desc parameter in arrange and `ORDER BY` clause respectively, which allows us to order data in descending order.
+Notice that in both dplyr and SQL we have a function `round` that rounds a number to the specified number of decimal places. Also, note that in both dplyr and SQL there is a desc parameter in arrange and `ORDER BY` clause respectively, which allows us to order data in descending order.
 
 ------------------------------------------------------------------------
 
 #### Group by and Summarise
 
-Other useful features of dplyr include grouping data by columns and aggregate data using `summarise()`. This is one of the cases where SQL provides a clause with the same name - `GROUP BY`. However, there is no direct analog to `summarise()` function in SQL, but we can achieve the same result using the analog of `mutate()` -- specifying the data we want to aggregate in `SELECT` clause.
+Other useful features of dplyr include grouping data by columns and aggregate data using `summarise()`. This is one of the cases where SQL provides a clause with the same name -- `GROUP BY`. However, there is no direct analog to `summarise()` function in SQL, but we can achieve the same result using the analog of `mutate()` -- specifying the data we want to aggregate in `SELECT` clause.
 
 ``` r
 # dplyr code
@@ -278,22 +270,26 @@ Note that SQL uses avg function instead of mean that is used by dplyr.
 
 ------------------------------------------------------------------------
 
-With this brief overview of SQL features compared to dplyr features it seems like most languages can be interchangeable for the most part when our main goal is to query data. However, the differences become apparent when we want to actually analyze data. This is where dplyr and R in general is taking the lead. One of the features of R that can't be done using raw SQL is drawing graphs like this:
+With this brief overview of SQL features compared to dplyr functionality, it seems like for the most part these languages can be interchangeable when our main goal is to query data. However, the differences become apparent when we want to actually analyze data. This is where dplyr, and R in general, is taking the lead. One of the features of R that can't be done using raw SQL is drawing graphs like this:
 
 ``` r
-plot(players$experience, round((players$salary / 1000000), 2), col = players$salary, pch = 1:9,
-     cex = 0.9, xlab = "Experience", ylab = "Salary (in millions)", main = "Salary / Experience Plot")
+plot(players$experience, round((players$salary / 1000000), 2), 
+     col = players$salary, pch = 1:9, cex = 0.9,
+     xlab = "Experience", ylab = "Salary (in millions)", 
+     main = "Salary / Experience Plot")
 ```
 
 ![](post01-vitali-shypko_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-3-1.png)
 
-On the other hand, SQL is much wider used in software development industry that relies heavily on relational databases and is not that depended on the statistical part of data.
+On the other hand, SQL is much wider used in software development industry that relies heavily on relational databases and is not that dependent on the statistical part of data. In everyday life of a software developer, writing SQL queries doesn't require any additional software -- it's fully supported through Terminal or its analogs, which is very useful and saves time.
 
 As with many other things that are used to achieve similar goals, it is up to the professional to choose the suitable tool to perform a specific task. Hopefully, from this brief overview the connection between dplyr and SQL became more evident for people familiar with both languages. For those who have not seen SQL before, this article should give an overview of the features of SQL. With your knowledge or R, it should be much easier to pick up SQL syntax should you decide to go into software engineering or database management.
 
+For those of you, who became interested in learning SQL after reading this post, I strongly suggest taking this free [Khan Academy intro course](https://www.khanacademy.org/computing/computer-programming/sql).
+
 ------------------------------------------------------------------------
 
-#### Resources used:
+#### References:
 
 -   <https://blog.exploratory.io/why-sql-is-not-for-analysis-but-dplyr-is-5e180fef6aa7>
 -   <http://dplyr.tidyverse.org/>
