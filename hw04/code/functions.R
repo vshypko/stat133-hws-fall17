@@ -1,3 +1,6 @@
+# Packages
+library(stringr)
+
 # remove_missing takes a numeric vector, removes missing values from it,
 # and returns the resulting vector.
 remove_missing <- function(v) {
@@ -141,7 +144,6 @@ summary_stats <- function(v) {
 # nice format.
 print_stats <- function(v) {
   for (i in 1:length(v)) {
-    #str_pad(names(v[i]), 10, "right")
     cat(str_pad(names(v[i]), 9, "right"), ":", sprintf("%.4f", (v[[i]])), "\n")
   }
 }

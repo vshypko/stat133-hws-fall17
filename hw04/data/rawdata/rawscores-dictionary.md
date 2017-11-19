@@ -4,7 +4,7 @@
 #### Downloaded from: https://github.com/ucb-stat133/stat133-fall-2017/blob/master/data/rawscores.csv
 
 * The data contains the raw scores for a fictitious STAT 133 course.
-* There are 335 rows in the .csv file.
+* There are 334 rows in the .csv file.
 * There are 16 columns in the .csv file.
 * The column labels are: "HW1", "HW2", "HW3", "HW4", "HW5", "HW6", "HW7", "HW8", "HW9", "ATT", "QZ1", "QZ2", "QZ3", "QZ4", "EX1", "EX2".
 * Description of variables:
