@@ -2,16 +2,16 @@
 
 - Was this your first time writing unit tests?
 
-> Answer
+> No, it was not my first time writing unit tests. I am a CS major and we are required to write unit tests for all our assignments in CS 61B.
 
 - On a scale from 0 to 10, how confusing you found the logic of testthat tests? (0 not
 at all, 10 very confusing)
 
-> Answer
+> I would say 1. They are pretty straightforward and very similar to jUnit that I am familiar with.
 
 - Was this your first time working with ggvis?
 
-> Answer
+> Yes, this was my first time working with ggvis.
 
 - On a scale from 0 to 10, how confusing you found the syntax of ggvis? (0 not at all,
 10 very confusing)
@@ -20,7 +20,7 @@ at all, 10 very confusing)
 
 - Was this your first time working with conditional panels in shiny?
 
-> Answer
+> Yes, this was my first time working with conditional panels in shiny.
 
 - On a scale from 0 to 10, how challenging you found to work with the conditional panels?
 (0 not at all, 10 very challenging)
@@ -34,7 +34,7 @@ now ggvis. Which do you like the most and why?
 
 - Did anyone help you completing the assignment? If so, who?
 
-> Answer
+> No one helped me to complete this assignment.
 
 - How much time did it take to complete this HW?
 
