@@ -1,4 +1,5 @@
 source("functions.R")
+library(testthat)
 
 context("Test remove_missing()")
 test_that("remove_missing works correctly", {
