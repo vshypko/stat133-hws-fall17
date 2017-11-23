@@ -16,7 +16,7 @@ at all, 10 very confusing)
 - On a scale from 0 to 10, how confusing you found the syntax of ggvis? (0 not at all,
 10 very confusing)
 
-> Answer
+> 3. I would say ggvis syntax is pretty straightforward. Just needs some getting used to after using ggplot2.
 
 - Was this your first time working with conditional panels in shiny?
 
@@ -25,12 +25,12 @@ at all, 10 very confusing)
 - On a scale from 0 to 10, how challenging you found to work with the conditional panels?
 (0 not at all, 10 very challenging)
 
-> Answer
+> 6. This is a new concept for me, that's why it was pretty challenging to work with conditional panels. But after looking at STAT github examples, it made much more sense.
 
 - So far we’ve exposed you to three graphing paradigms in R: base plots, ggplot, and
 now ggvis. Which do you like the most and why?
 
-> Answer
+> I like ggplots the most since they still seem the most powerful tool with a lot of aesthetic settings for plotting.
 
 - Did anyone help you completing the assignment? If so, who?
 
@@ -38,8 +38,8 @@ now ggvis. Which do you like the most and why?
 
 - How much time did it take to complete this HW?
 
-> Answer
+> I spent about 3 days to complete this homework.
 
 - What was the most time consuming part?
 
-> Answer
+> The most time consuming part was making Shiny app look exactly like the screenshots provided in the homework instructions.

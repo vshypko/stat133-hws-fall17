@@ -4,13 +4,14 @@
 # Input(s): rawscores.csv
 # Output(s): cleanscores.csv
 # Author: Vitali Shypko
-# Date: 11-19-2017
+# Date: 11-22-2017
 # ===================================================================
-
-source("functions.R")
 
 # Packages
 library(readr)
+
+# Functions to clean data
+source("functions.R")
 
 # Export the data table
 rawdata <- read_csv("../data/rawdata/rawscores.csv")
@@ -68,6 +69,7 @@ for (i in 1:length(attendance)) {
   lab_scores[i] <- score_lab(attendance[i])
 }
 rawdata[["Lab"]] <- lab_scores
+
 homework_scores <- rawdata[["Homework"]]
 quiz_scores <- rawdata[["Quiz"]]
 test1_scores <- rawdata[["Test1"]]

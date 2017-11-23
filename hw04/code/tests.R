@@ -1,5 +1,17 @@
-source("functions.R")
+# ===================================================================
+# Title: HW 04: Grades Visualizer
+# Description: Tests for functions.R
+# Input(s): functions.R
+# Output(s): none
+# Author: Vitali Shypko
+# Date: 11-22-2017
+# ===================================================================
+
+# Packages
 library(testthat)
+
+# Source in functions to be tested
+source("functions.R")
 
 context("Test remove_missing()")
 test_that("remove_missing works correctly", {

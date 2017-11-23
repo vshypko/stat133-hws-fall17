@@ -1,3 +1,12 @@
+# ===================================================================
+# Title: HW 04: Grades Visualizer
+# Description: Functions to analyze data
+# Input(s): none
+# Output(s): none
+# Author: Vitali Shypko
+# Date: 11-22-2017
+# ===================================================================
+
 # Packages
 library(stringr)
 
