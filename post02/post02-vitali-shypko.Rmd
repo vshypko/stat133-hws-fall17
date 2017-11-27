@@ -1,0 +1,15 @@
+---
+title: "Post 2: HTML and CSS -- make Shiny apps beautiful"
+author: "Vitali Shypko"
+date: "11/26/2017"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+---
+
+#### References:
