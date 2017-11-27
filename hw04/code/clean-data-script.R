@@ -112,10 +112,10 @@ rawdata[["Grade"]] <- Grade
 filenames <- c("Lab-stats", "Homework-stats", "Quiz-stats", "Test1-stats",
                "Test2-stats", "Overall-stats")
 
-for (i in 1:length(filenames)) {
-  sink(paste0("../output/", filenames[i], ".txt"))
-  cat(paste0("Summary statistics for ", str_sub(filenames[i], 1, -7), "\n"))
-  print_stats(summary_stats(rawdata[[str_sub(filenames[i], 1, -7)]]))
+for (filename in filenames) {
+  sink(paste0("../output/", filename, ".txt"))
+  cat(paste0("Summary statistics for ", str_sub(filename, 1, -7), "\n"))
+  print_stats(summary_stats(rawdata[[str_sub(filename, 1, -7)]]))
   sink()
 }
 
