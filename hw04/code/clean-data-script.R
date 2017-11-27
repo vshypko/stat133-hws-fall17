@@ -70,16 +70,11 @@ for (i in 1:length(attendance)) {
 }
 rawdata[["Lab"]] <- lab_scores
 
-homework_scores <- rawdata[["Homework"]]
-quiz_scores <- rawdata[["Quiz"]]
-test1_scores <- rawdata[["Test1"]]
-test2_scores <- rawdata[["Test2"]]
-
 Overall <- c()
 for (i in 1:nrow(rawdata)) {
-  Overall[i] <- 0.1 * lab_scores[i] + 0.3 * homework_scores[i] + 
-                0.15 * quiz_scores[i] + 0.2 * test1_scores[i] +
-                0.25 * test2_scores[i]
+  Overall[i] <- 0.1 * rawdata[["Lab"]][i] + 0.3 * rawdata[["Homework"]][i] + 
+                0.15 * rawdata[["Quiz"]][i] + 0.2 * rawdata[["Test1"]][i] +
+                0.25 * rawdata[["Test2"]][i]
 }
 rawdata[["Overall"]] <- Overall
 
@@ -114,35 +109,15 @@ for (i in 1:nrow(rawdata)) {
 rawdata[["Grade"]] <- Grade
 
 # Summary for Lab, Homework, Quiz, Test1, Test2, and Overall
-sink("../output/Lab-stats.txt")
-cat("Summary statistics for Lab\n")
-print_stats(summary_stats(lab_scores))
-sink()
+filenames <- c("Lab-stats", "Homework-stats", "Quiz-stats", "Test1-stats",
+               "Test2-stats", "Overall-stats")
 
-sink("../output/Homework-stats.txt")
-cat("Summary statistics for Homework\n")
-print_stats(summary_stats(homework_scores))
-sink()
-
-sink("../output/Quiz-stats.txt")
-cat("Summary statistics for Quiz\n")
-print_stats(summary_stats(quiz_scores))
-sink()
-
-sink("../output/Test1-stats.txt")
-cat("Summary statistics for Test1\n")
-print_stats(summary_stats(test1_scores))
-sink()
-
-sink("../output/Test2-stats.txt")
-cat("Summary statistics for Test2\n")
-print_stats(summary_stats(test2_scores))
-sink()
-
-sink("../output/Overall-stats.txt")
-cat("Summary statistics for Overall\n")
-print_stats(summary_stats(Overall))
-sink()
+for (i in 1:length(filenames)) {
+  sink(paste0("../output/", filenames[i], ".txt"))
+  cat(paste0("Summary statistics for ", str_sub(filenames[i], 1, -7), "\n"))
+  print_stats(summary_stats(rawdata[[str_sub(filenames[i], 1, -7)]]))
+  sink()
+}
 
 # Structure of the data frame of clean scores
 sink("../output/summary-cleanscores.txt")
